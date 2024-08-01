@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Clubs and Chapters</title>
+    <link rel="stylesheet" href="ccstyle.css">
+    <script src="ccscript.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    /* Basic CSS Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* General Styles */
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        background-color: #121212;
+        color: #e0e0e0;
+        overflow-x: hidden;
+        /* Ensure no horizontal scrollbars appear */
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle farthest-side at 0% 50%,
+                #282828 23.5%,
+                rgba(255, 170, 0, 0) 0) 21px 30px,
+            radial-gradient(circle farthest-side at 0% 50%,
+                #2c3539 24%,
+                rgba(240, 166, 17, 0) 0) 19px 30px,
+            linear-gradient(#282828 14%,
+                rgba(240, 166, 17, 0) 0,
+                rgba(240, 166, 17, 0) 85%,
+                #282828 0) 0 0,
+            linear-gradient(150deg,
+                #282828 24%,
+                #2c3539 0,
+                #2c3539 26%,
+                rgba(240, 166, 17, 0) 0,
+                rgba(240, 166, 17, 0) 74%,
+                #2c3539 0,
+                #2c3539 76%,
+                #282828 0) 0 0,
+            linear-gradient(30deg,
+                #282828 24%,
+                #2c3539 0,
+                #2c3539 26%,
+                rgba(240, 166, 17, 0) 0,
+                rgba(240, 166, 17, 0) 74%,
+                #2c3539 0,
+                #2c3539 76%,
+                #282828 0) 0 0,
+            linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0 #282828;
+        background-size: 40px 60px;
+    }
+
+
+    header {
+        position: sticky;
+        margin: 0 5rem;
+        top: 3rem;
+        width: 90%;
+        z-index: 2;
+        border-radius: 100px;
+        background-color: black;
+        box-shadow: 0px 0px 50px #8B00FF;
+    }
+
+    .navbar {
+        color: #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+
+    .logo h1 {
+        font-size: 2rem;
+        color: #8B00FF;
+        /* Space Purple */
+        font-weight: bold;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+    }
+
+    .nav-links li {
+        margin-left: 2rem;
+    }
+
+    .nav-links a {
+        color: #e0e0e0;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: #8B00FF;
+        /* Space Purple */
+    }
+
+    .nav-links .button {
+        padding: 0.5rem 1rem;
+        background: #8B00FF;
+        /* Space Purple */
+        border-radius: 5px;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-links .button:hover {
+        background: #6A00CC;
+        /* Darker shade of Space Purple */
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            padding: 1rem;
+            /* Adjust padding for better spacing */
+        }
+
+        .nav-links {
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .nav-links li {
+            margin: 0.5rem 0;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            /* Adjust font size */
+        }
+
+        .nav-links .button {
+            padding: 0.4rem 0.8rem;
+            /* Adjust button padding */
+            font-size: 0.9rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo h1 {
+            font-size: 1.2rem;
+            /* Further adjust font size */
+        }
+
+        .nav-links .button {
+            padding: 0.3rem 0.7rem;
+            /* Adjust button padding */
+            font-size: 0.8rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: none;
+            padding: 1em 0;
+            gap: 1.5em;
+        }
+
+        .navbar.active .nav-links {
+            display: flex;
+        }
+
+        .burger {
+            display: block;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-links li img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    hr.animated {
+        width: 137px;
+        animation: animate .5s ease-in-out;
+    }
+
+    @keyframes animate {
+        0% {
+            transform: scaleX(0);
+        }
+
+        100% {
+            transform: scaleX(1);
+        }
+    }
+
+
+    hr.animated {
+        width: 137px;
+        animation: animate .5s ease-in-out;
+    }
+
+    @keyframes animate {
+        0% {
+            transform: scaleX(0);
+        }
+
+        100% {
+            transform: scaleX(1);
+        }
+    }
+
+
+    /* Slide Navigation */
+    .slide-nav {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+
+    }
+
+    .slide-nav-button {
+        width: 1.5rem;
+        height: 2rem;
+        background: #8B00FF;
+        /* Space Purple */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .slide-nav-button:hover {
+        background: #6A00CC;
+        /* Darker shade of Space Purple */
+        transform: scale(1.05);
+    }
+
+    .slide-nav-button.active {
+        background: #6A00CC;
+        /* Darker shade of Space Purple */
+    }
+
+    /* Filter Section */
+    .filter-section {
+        display: flex;
+        justify-content: center;
+        margin: 5rem 0;
+    }
+
+    .filter-button {
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+        background: #8B00FF;
+        /* Space Purple */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .filter-button:hover {
+        background: #6A00CC;
+        /* Darker shade of Space Purple */
+        transform: scale(1.05);
+    }
+
+    #searchInput {
+        margin: 0 14rem;
+        padding: 0.5rem;
+        border: none;
+        width: 70%;
+        border-radius: 100px;
+        background-color: #4a2d4a;
+        color: whitesmoke;
+    }
+
+    #searchInput::placeholder {
+        color: #fff;
+    }
+
+    #searchInput:focus {
+        outline: none;
+        box-shadow: 0px 0px 5px #8B00FF;
+        background: rgba(35, 35, 35, 0.9);
+        /* Darker semi-transparent background on focus */
+    }
+
+    /* Club/Chapter Slides */
+    .slides-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 15px;
+        /* Ensure content starts below fixed navbar */
+    }
+
+    .slide {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        width: 60%;
+        max-width: 800px;
+    }
+
+    .slide.active {
+        display: flex;
+    }
+
+    .club-chapter {
+        width: 100%;
+        background: rgba(6, 6, 6, 0.8);
+        /* Transparent background */
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border-radius: 25% 5px/10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .club-chapter:hover {
+        box-shadow: 10px 10px 5px #8B00FF;
+    }
+
+    .club-chapter h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #e0e0e0;
+    }
+
+    .club-chapter p {
+        color: #b0b0b0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+        }
+
+        .nav-links {
+            flex-direction: column;
+            margin-top: 1rem;
+        }
+
+        .nav-links li {
+            margin: 0.5rem 0;
+        }
+
+        .filter-section {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-button {
+            margin: 0.5rem;
+        }
+
+        #searchInput {
+            width: 80%;
+            max-width: none;
+        }
+
+        .slide {
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .filter-button {
+            padding: 0.3rem 0.7rem;
+            font-size: 0.8rem;
+        }
+
+        #searchInput {
+            width: 90%;
+            padding: 0.3rem 0.5rem;
+        }
+
+        .slide {
+            width: 90%;
+        }
+    }
+
+    .footer {
+        background: rgba(30, 30, 30, 0.8);
+        /* Transparent background */
+        text-align: center;
+        padding: 2rem 0;
+        border-radius: 10px;
+        margin-top: auto;
+    }
+
+    .footer ul {
+        justify-content: center;
+        margin: 0 33.5rem;
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin-top: 1rem;
+
+    }
+
+    .item a {
+        text-decoration: none;
+        width: 3rem;
+        height: 3rem;
+        background-color: #252627;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        border: 3px solid #141414;
+        overflow: hidden;
+    }
+
+    .item a::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-color);
+        z-index: 0;
+        scale: 1 0;
+        transform-origin: bottom;
+        transition: scale 0.5s ease;
+    }
+
+    .item:hover a::before {
+        scale: 1 1;
+    }
+
+    .icon {
+        font-size: 1.5rem;
+        color: hsl(321, 89%, 42%);
+        transition: 0.5s ease;
+        z-index: 2;
+    }
+
+    .item a:hover .icon {
+        color: #fff;
+        transform: rotateY(360deg);
+    }
+
+    .item:nth-child(1) {
+        --bg-color: linear-gradient(to bottom right, #f9ce34, #ee2a7b, #6228d7);
+    }
+
+    .item:nth-child(2) {
+        --bg-color: #0077b5;
+    }
+
+    .item:nth-child(3) {
+        --bg-color: #ff0000;
+    }
+
+    .item:nth-child(4) {
+        --bg-color: #000;
+    }
+
+    .item:nth-child(5) {
+        --bg-color: blue;
+    }
+
+    .item:nth-child(6) {
+        --bg-color: #000;
+    }
+
+    .name {
+        margin-top: 1rem;
+    }
+
+    .name ul {
+        justify-content: center;
+    }
+
+    .name a {
+        text-decoration: none;
+        color: #00c3ff;
+
+    }
+
+    @media (max-width: 768px) {
+        .footer ul {
+            flex-wrap: wrap;
+        }
+
+        .footer ul .item {
+            flex: 1 0 50%;
+            /* Two items per row on smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer ul .item {
+            flex: 1 0 100%;
+            /* One item per row on even smaller screens */
+            margin-bottom: 1rem;
+            /* Add margin between items */
+        }
+
+        .footer ul {
+            justify-content: center;
+            /* Center items on smaller screens */
+        }
+    }
+
+    .btt {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #8B00FF;
+        color: black;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 10px;
+
+    }
+
+    .btt:hover {
+        background-color: #b474e9;
+    }
+</style>
+
+<body class="container">
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>EventHub</h1>
+                <hr class="animated" />
+            </div>
+            <ul class="nav-links">
+                <li><a href="index2.php">Home</a></li>
+                <li><a href="events.php">Events</a></li>
+                <li><a href="cclist.html">Clubs & Chapters</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <!-- <li><a href="#login" class="button">Login</a></li>
+                <li><a href="#register" class="button">Sign Up</a></li> -->
+            </ul>
+        </nav>
+    </header>
+
+    <main class="clubs-chapters">
+        <div class="filter-section">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="clubs">Clubs</button>
+            <!-- <button class="filter-button" data-filter="chapters">Chapters</button> -->
+            <button class="filter-button" data-filter="technical-clubs">Technical Clubs</button>
+            <!-- <button class="filter-button" data-filter="technical-chapters">Technical Chapters</button> -->
+            <button class="filter-button" data-filter="ngos">NGOs</button>
+            <button class="filter-button" data-filter="literature">Literature</button>
+            <button class="filter-button" data-filter="fitness">Fitness</button>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+
+        <div class="slides-container">
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Computer Science Club</h3>
+                    <p>Description: Explore the world of computer science and technology.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Robotics Chapter</h3>
+                    <p>Description: Hands-on experience with robotics and automation.</p>
+                    <p>Type: Technical Chapter</p>
+                </div>
+                <div class="club-chapter" data-type="literature">
+                    <h3>Literary Society</h3>
+                    <p>Description: A hub for literature enthusiasts and budding writers.</p>
+                    <p>Type: Literature</p>
+                </div>
+                <div class="club-chapter" data-type="ngos">
+                    <h3>Environmental NGO</h3>
+                    <p>Description: Work towards a greener planet with our environmental initiatives.</p>
+                    <p>Type: NGO</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Music Club</h3>
+                    <p>Description: Unite through the universal language of music.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="fitness">
+                    <h3>Fitness Club</h3>
+                    <p>Description: Stay fit and healthy with various fitness activities.</p>
+                    <p>Type: Fitness</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Drama Society</h3>
+                    <p>Description: Embrace your acting skills and perform in various plays.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Photography Club</h3>
+                    <p>Description: Capture the beauty around you with photography.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Debate Society</h3>
+                    <p>Description: Engage in thought-provoking debates and discussions.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Math Club</h3>
+                    <p>Description: Dive deep into the fascinating world of mathematics.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>AI and Machine Learning Club</h3>
+                    <p>Description: Explore AI and ML through projects and workshops.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Electronics Club</h3>
+                    <p>Description: Hands-on projects with electronics and circuits.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Quiz Club</h3>
+                    <p>Description: Challenge your knowledge with exciting quizzes.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Cultural Club</h3>
+                    <p>Description: Celebrate various cultures and traditions.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Finance Club</h3>
+                    <p>Description: Learn about finance and investment strategies.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Gaming Club</h3>
+                    <p>Description: Engage in various gaming activities and tournaments.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="fitness">
+                    <h3>Yoga Club</h3>
+                    <p>Description: Relax and rejuvenate with yoga sessions.</p>
+                    <p>Type: Fitness</p>
+                </div>
+                <div class="club-chapter" data-type="ngos">
+                    <h3>Human Rights Chapter</h3>
+                    <p>Description: Advocate for human rights and social justice.</p>
+                    <p>Type: NGO</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Astronomy Club</h3>
+                    <p>Description: Explore the universe with astronomy enthusiasts.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Dance Club</h3>
+                    <p>Description: Express yourself through various dance forms.</p>
+                    <p>Type: Club</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="club-chapter" data-type="clubs">
+                    <h3>History Society</h3>
+                    <p>Description: Dive into the past and explore historical events.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Entrepreneurship Club</h3>
+                    <p>Description: Foster entrepreneurial skills and startup culture.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Film Society</h3>
+                    <p>Description: Explore the world of cinema and film-making.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="ngos">
+                    <h3>Volunteer Club</h3>
+                    <p>Description: Engage in community service and volunteer work.</p>
+                    <p>Type: NGO</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Psychology Club</h3>
+                    <p>Description: Delve into the human mind and behavior.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="technical-chapters">
+                    <h3>Coding Chapter</h3>
+                    <p>Description: Enhance your coding skills with various projects.</p>
+                    <p>Type: Technical Chapter</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Music Production Club</h3>
+                    <p>Description: Learn and practice music production techniques.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="literature">
+                    <h3>Creative Writing Club</h3>
+                    <p>Description: Unleash your creativity through writing.</p>
+                    <p>Type: Literature</p>
+                </div>
+                <div class="club-chapter" data-type="fitness">
+                    <h3>Cycling Club</h3>
+                    <p>Description: Explore various trails and stay fit through cycling.</p>
+                    <p>Type: Fitness</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Art Club</h3>
+                    <p>Description: Express yourself through various forms of art.</p>
+                    <p>Type: Club</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <div class="club-chapter" data-type="ngos">
+                    <h3>Sustainability Club</h3>
+                    <p>Description: Promote sustainable practices and environmental awareness.</p>
+                    <p>Type: NGO</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Physics Club</h3>
+                    <p>Description: Explore the fundamental principles of physics.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Cooking Club</h3>
+                    <p>Description: Learn and share culinary skills and recipes.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Language Club</h3>
+                    <p>Description: Practice and learn new languages through interactive sessions.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="technical-chapters">
+                    <h3>Engineering Chapter</h3>
+                    <p>Description: Connect with fellow engineering enthusiasts and work on innovative projects.</p>
+                    <p>Type: Technical Chapter</p>
+                </div>
+                <div class="club-chapter" data-type="ngos">
+                    <h3>Healthcare NGO</h3>
+                    <p>Description: Promote healthcare initiatives and awareness campaigns.</p>
+                    <p>Type: NGO</p>
+                </div>
+                <div class="club-chapter" data-type="clubs">
+                    <h3>Chess Club</h3>
+                    <p>Description: Sharpen your strategic thinking skills through chess.</p>
+                    <p>Type: Club</p>
+                </div>
+                <div class="club-chapter" data-type="literature">
+                    <h3>Journalism Society</h3>
+                    <p>Description: Report on campus events and hone journalistic skills.</p>
+                    <p>Type: Literature</p>
+                </div>
+                <div class="club-chapter" data-type="fitness">
+                    <h3>Martial Arts Club</h3>
+                    <p>Description: Learn self-defense techniques and discipline through martial arts.</p>
+                    <p>Type: Fitness</p>
+                </div>
+                <div class="club-chapter" data-type="technical-clubs">
+                    <h3>Chemistry Club</h3>
+                    <p>Description: Explore chemical reactions and experiments.</p>
+                    <p>Type: Technical Club</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Navigation -->
+        <div class="slide-nav">
+            <button class="slide-nav-button active" data-slide="1">1</button>
+            <button class="slide-nav-button" data-slide="2">2</button>
+            <button class="slide-nav-button" data-slide="3">3</button>
+            <button class="slide-nav-button" data-slide="4">4</button>
+        </div>
+    </main>
+    <section class="footer">
+        <ul>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-instagram icon"></i>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-linkedin icon"></i>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-youtube icon"></i>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-x-twitter icon"></i>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-facebook icon"></i>
+                </a>
+            </li>
+            <li class="item">
+                <a href="#">
+                    <i class="fa-brands fa-github icon"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="name">
+            <ul>
+                <a href="index.html">Home</a>
+                <a href="event.html">Events</a>
+                <a href="cclist.html">Clubs&Chapters</a>
+            </ul>
+        </div>
+
+    </section>
+    <button class="btt" id="backToTop" onclick="topFunction()"><i class="fas fa-arrow-up"></i></button>
+
+</body>
+
+</html>
+</body>
+
+</html>
